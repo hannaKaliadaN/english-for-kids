@@ -1,0 +1,10 @@
+<mvc:View controllerName="game.controller.Train"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page title="Train page">
+        <headerContent>
+            <Button text="Main page" press="onMainPagePress" />
+            <Button text="Results" press="onButtonResultsPress" />
+        </headerContent>
+    </Page>
+</mvc:View>

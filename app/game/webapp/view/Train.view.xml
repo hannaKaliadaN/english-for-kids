@@ -1,0 +1,50 @@
+<mvc:View controllerName="game.controller.Train"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:custom="game.control"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Page title="Train page">
+        <headerContent>
+            <Button text="Start train" press='onStartTrainPress'/>
+        </headerContent>
+        <HBox items="{Words}" id="words" wrap="Wrap" visible="{helpModel>/isVisibleWords}">
+            <items>
+                <custom:MyControl header="{word}" flip="true" subheader="{word}-{translation}" src="{imageSrc}" onButtonPress="onButtonPress" />
+            </items>
+        </HBox>
+        <Table id='tableId' visible="{= !${helpModel>/isVisibleWords}}" items="{helpModel>/currentTrain}">
+            <columns>
+                <Column>
+                    <Label text="English" />
+                </Column>
+                <Column>
+                    <Label text="Russian" />
+                </Column>
+                <Column>
+                    <Label text="Check" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem id="columnListItem">
+                    <cells>
+                        <Text text="{
+                                path: 'helpModel>word',
+                                type: 'sap.ui.model.type.String',
+                                constraints: {
+                                    maxLength: 50,
+                                    minLength: 3
+                                }
+                                }" />
+                        <Input name="{helpModel>translation}" value="{helpModel>currentTranslation}" change="onChangeInput"/>
+                        <core:Icon
+                        src="sap-icon://accept"
+                        class="size2"
+                        color="{= ${helpModel>currentTranslation}.toLowerCase() === ${helpModel>translation} ? 'Positiv' : 'Negative'}" >
+                      
+                    </core:Icon>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Page>
+</mvc:View>

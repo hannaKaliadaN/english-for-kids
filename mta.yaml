@@ -1,0 +1,150 @@
+_schema-version: "3.1"
+ID: english
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: english-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: english-db
+  - name: english-auth
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: npm-ci
+- name: english-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: english-db
+  - name: english-uaa
+  parameters:
+    buildpack: nodejs_buildpack
+- name: english-destinations
+  type: com.sap.application.content
+  requires:
+  - name: english-uaa
+    parameters:
+      service-key:
+        name: english-uaa-key
+  - name: english-html5-repo-host
+    parameters:
+      service-key:
+        name: english-html5-repo-host-key
+  - name: srv-api
+  - name: english-destination
+    parameters:
+      content-target: true
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Authentication: OAuth2UserTokenExchange
+          Name: english-app-srv
+          TokenServiceInstanceName: english-uaa
+          TokenServiceKeyName: english-uaa-key
+          URL: ~{srv-api/srv-url}
+          sap.cloud.service: english.service
+        - Name: english-html5-repo-host
+          ServiceInstanceName: english-html5-repo-host
+          ServiceKeyName: english-html5-repo-host-key
+          sap.cloud.service: english.service
+        - Authentication: OAuth2UserTokenExchange
+          Name: english-uaa
+          ServiceInstanceName: english-uaa
+          ServiceKeyName: english-uaa-key
+          sap.cloud.service: english.service
+        existing_destinations_policy: update
+  build-parameters:
+    no-source: true
+- name: english-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: english-html5-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - game.zip
+      name: game
+      target-path: resources/
+- name: game
+  type: html5
+  path: app/game
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: english-html5-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+- name: english-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+    service: destination
+    service-plan: lite
+- name: english-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: english-uaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      role-collections:
+      - description: Game
+        name: Game-${space}
+        role-template-references:
+        - $XSAPPNAME.GameManager
+      - description: View Game
+        name: GameViewer-${space}
+        role-template-references:
+        - $XSAPPNAME.GameViewer
+      tenant-mode: dedicated
+      xsappname: english-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: english-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: english-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npx -p @sap/cds-dk cds build --production

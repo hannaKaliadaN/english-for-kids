@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns:custom="game.control"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Page id="pageWord" title="{i18n>title}">
+        <headerContent>
+            <Button text="Train" press='onButtonTrainPress' enabled="{helpModel>/isEnabled}"></Button>
+          
+        </headerContent>
+        <HBox items="{Words}" id="words" wrap="Wrap">
+            <items>
+                <custom:MyControl header="{word}" flip="true" subheader="{word}-{translation}" src="{imageSrc}" onButtonPress="onButtonPress" />
+            </items>
+        </HBox> 
+    </Page>
+</core:FragmentDefinition>

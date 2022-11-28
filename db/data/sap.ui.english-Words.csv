@@ -1,0 +1,14 @@
+ID;createdAt;createdBy;word;translation;imageSrc;audioSrc;category_id;
+5;2021-04-27;hanna.kaliada@leverx.com;open;открывать;https://media.istockphoto.com/photos/small-business-owner-picture-id1346252956?b=1&k=20&m=1346252956&s=170667a&w=0&h=mMAN6-8ighJTYZadZhKEErzcNz0o_xDH2avCsGkKBZg=;open.mp3;1;
+6;2021-04-27;hanna.kaliada@leverx.com;buy;покупать;https://media.istockphoto.com/id/1159900414/photo/healthy-food-for-healthy-life.jpg?b=1&s=170667a&w=0&k=20&c=1ReC9Crq4j7VzYFO5awfS6PoG1GAH9m7785nZOO2cYQ=;buy.mp3;1;
+7;2021-04-27;hanna.kaliada@leverx.com;cat;кот;https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492__340.jpg;cat.mp3;3;
+8;2021-04-27;hanna.kaliada@leverx.com;dog;собака;https://www.princeton.edu/sites/default/files/styles/half_2x/public/images/2022/02/KOA_Nassau_2697x1517.jpg?itok=iQEwihUn;dog.mp3;3;
+9;2021-04-27;hanna.kaliada@leverx.com;cry;плакать;https://media.istockphoto.com/id/1374841003/photo/young-woman-crying.jpg?b=1&s=170667a&w=0&k=20&c=reeTXWnW_U-5qofNFm09nqKQBtap7Y8CFBEhvCECWYo=;cry.mp3;2;
+10;2021-04-27;hanna.kaliada@leverx.com;laught;смеяться;https://media.istockphoto.com/id/1338757718/photo/surprised-young-woman-excited-cover-open-mouth-with-hands-and-look-side-happy-laughing.jpg?b=1&s=170667a&w=0&k=20&c=b7bIpPshRjRLTZ8bO6zxqX9ocPj4f2AAal7f7PvHN2A=;laught.mp3;2;
+11;2021-04-27;hanna.kaliada@leverx.com;go;идти;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrGOsvKrQ9PL4TsEljh0ZZQB6pGuZFtkj57Q&usqp=CAU;;1;
+12;2021-04-27;hanna.kaliada@leverx.com;run;бегать;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScDdMK1ZYXViBMoZF22mmXV95Ev2KqsQ_Zfeh5lvK-G7aPe8W0I63KYpOk_cayNpveS2s&usqp=CAU;buy.mp3;1;
+17;2021-04-27;hanna.kaliada@leverx.com;swim;плавать;https://cdn.britannica.com/66/162466-131-47ADB66F/Man-butterfly-stroke-pool.jpg;;1;
+13;2021-04-27;hanna.kaliada@leverx.com;elephant;слон;https://www.wwf.org.uk/sites/default/files/styles/social_share_image/public/2018-10/Large_WW1113482.jpg?itok=Bluh496C;cat.mp3;3;
+14;2021-04-27;hanna.kaliada@leverx.com;snake;змея;https://sunmag.me/wp-content/uploads/2019/12/sunmag-0-22.jpg;dog.mp3;3;
+15;2021-04-27;hanna.kaliada@leverx.com;sad;грустный;https://rolling-scopes-school.github.io/annakoliada-JSFE2021Q1/english-for-kids-admin-panel/img/sad.jpg;cry.mp3;2;
+16;2021-04-27;hanna.kaliada@leverx.com;suprised;удивленный;https://rolling-scopes-school.github.io/annakoliada-JSFE2021Q1/english-for-kids-admin-panel/img/surprised.jpg;laught.mp3;2;
