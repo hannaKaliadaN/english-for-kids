@@ -45,22 +45,35 @@ sap.ui.define(
         return result;
       },
       onButtonPress: function (oEvent) {
+        let control = oEvent.getSource();
+        let word = control.getHeader();
         debugger;
+        this.getPronunsationLink(word).then((data) => {
+          control.setSrcAudio(data.audio)
+        }).then(()=>{
+          debugger
+        });
       },
       getBindingOfPage() {
         return this.getSplitAppObj().getDetailPages()[0].getBindingContext();
       },
       onButtonTrainPress: function () {
-    
         var oContext = this.getBindingOfPage();
         this.navigateTo("Train", {
           CategId: oContext.getObject("ID"),
         });
       },
       onAdminPagePress: function () {
-            this.navigateTo("Admin", {});
+        this.navigateTo("Admin", {});
       },
-   
+      getPronunsationLink: function (word) {
+       return fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+          .then((response) => response.json())
+          .then((data) => data[0].phonetics);
+      },
+      getLink: function (word) {
+        // return this.getPronunsationLink(word).bind(this);
+      },
     });
   }
 );
