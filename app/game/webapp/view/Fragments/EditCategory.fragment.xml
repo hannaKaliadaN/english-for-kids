@@ -1,5 +1,8 @@
-<c:FragmentDefinition xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:f="sap.ui.layout.form">
-    <Dialog id="createCategoryPopup" title="Create Category">
+<c:FragmentDefinition xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog id="editCategoryPopup" title="Edit category">
         <f:SimpleForm maxContainerCols="1" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" columnsL="1">
             <f:content>
                 <Label text="Title" />
@@ -16,16 +19,16 @@
                         path: 'imageSrc',
                         type: 'sap.ui.model.type.String',
                         constraints: {
-                            maxLength: 150,
+                            maxLength: 500,
                             minLength: 3
                             }
-                        }"
-                />
+                        }" />
             </f:content>
         </f:SimpleForm>
         <buttons>
-            <Button text="Create" press="onCreateCategory" />
-            <Button text="Cancel" press="onCancelCategory" />
+            <Button text="Save" press="onSaveCategory" />
+            <Button text="Cancel" press="onCancelEditCategory" />
         </buttons>
     </Dialog>
+
 </c:FragmentDefinition>

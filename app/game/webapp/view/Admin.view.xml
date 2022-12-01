@@ -16,7 +16,6 @@
                             </TileContent>
                         </GenericTile>
                     </items>
-                   
                 </VBox>
                 <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop" header="Add new Category" press="onAddNewCategoryPress" backgroundImage='sap-icon://add' >
                     <TileContent >

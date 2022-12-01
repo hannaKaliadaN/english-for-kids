@@ -1,13 +1,13 @@
 <core:FragmentDefinition xmlns:custom="game.control"
     xmlns:core="sap.ui.core"
     xmlns="sap.m">
-    <Page id="pageWord" title="{i18n>title}">
+    <Page id="pageWord" title="{i18n>title}" floatingFooter="true" showFooter="{helpModel>/isVisible}">
         <headerContent>
             <Button text="Main page" press='onMainPagePress'></Button>
         </headerContent>
-        <HBox items="{Words}" id="words">
+        <HBox items="{Words}" id="words" wrap='Wrap'>
             <items>
-                <custom:MyControl header="{word}" flip="true" subheader="{word}-{translation}" src="{imageSrc}" onButtonPress="onButtonPress" />
+                <custom:MyControl header="{word}" flip="true" subheader="{translation}" srcPicture="{imageSrc}" isEdit="true" srcAudio="{audioSrc}" onEditPress='onEditCardPress' onDeletePress='onDeleteCardPress'/>
             </items>
         </HBox>
         <GenericTile visible="{helpModel>/isVisible}" class="sapUiTinyMarginBegin sapUiTinyMarginTop" header="Add new word" press="onAddNewWordPress" backgroundImage='sap-icon://add' >
@@ -15,5 +15,12 @@
                 <ImageContent src="sap-icon://add" />
             </TileContent>
         </GenericTile>
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+                <Button icon="sap-icon://edit" text="Edit category" press="onEditCategoryPress"/>
+                <Button icon='sap-icon://decline' text="Delete category" press="onDeleteCategoryPress"/>
+            </OverflowToolbar>
+        </footer>
     </Page>
 </core:FragmentDefinition>
