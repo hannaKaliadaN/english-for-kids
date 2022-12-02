@@ -41,48 +41,50 @@ sap.ui.define(
       onAddNewCategoryPress: function () {
         var oView = this.getView();
         let id = this.getId();
-        if (!this.byId("createCategoryPopup")) {
-          Fragment.load({
-            name: "game.view.Fragments.CreateCategory",
-            controller: this,
-            id: oView.getId(),
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            var oEntryCtx = oView.getModel().createEntry("/Categories", {
-              properties: {
-                ID: id,
-              },
-            });
-            oDialog.setBindingContext(oEntryCtx);
-            oDialog.open();
+        Fragment.load({
+          name: "game.view.Fragments.CreateCategory",
+          controller: this,
+          id: oView.getId(),
+        }).then(function (oDialog) {
+          oView.addDependent(oDialog);
+          var oEntryCtx = oView.getModel().createEntry("/Categories", {
+            properties: {
+              ID: id,
+            },
           });
-        } else {
-          this.byId("createCategoryPopup").open();
-        }
+          oDialog.setBindingContext(oEntryCtx);
+          oDialog.open();
+        });
       },
       onCreateCategory: function () {
         this.getModel().submitChanges();
         this.byId("createCategoryPopup").close();
+        this.byId("createCategoryPopup").destroy();
       },
       onCreateWord: function () {
         this.getModel().submitChanges();
         this.byId("createWordPopup").close();
+        this.byId("createWordPopup").destroy();
       },
       onCancelCategory: function () {
         this.getModel().resetChanges();
         this.byId("createCategoryPopup").close();
+        this.byId("createCategoryPopup").destroy();
       },
       onCancelWord: function () {
         this.getModel().resetChanges();
         this.byId("createWordPopup").close();
+        this.byId("createWordPopup").destroy();
       },
       onCancelEditWord: function () {
         this.getModel().resetChanges();
         this.byId("editWordPopup").close();
+        this.byId("editWordPopup").destroy();
       },
       onSaveWord: function () {
         this.getModel().submitChanges();
         this.byId("editWordPopup").close();
+        this.byId("editWordPopup").destroy();
       },
       onAddNewWordPress() {
         var oView = this.getView();
@@ -92,29 +94,26 @@ sap.ui.define(
           .getCurrentDetailPage()
           .getBindingContext()
           .getObject().ID;
-        if (!this.byId("createWordPopup")) {
-          Fragment.load({
-            name: "game.view.Fragments.CreateWord",
-            controller: this,
-            id: oView.getId(),
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            var oEntryCtx = oView.getModel().createEntry("/Words", {
-              properties: {
-                ID: id,
-                Category_ID: categoryId,
-                createdAt: new Date(),
-                createdBy: "hanna.kaliada@leverx.com",
-                modifiedAt: new Date(),
-                modifiedBy: "hanna.kaliada@leverx.com",
-              },
-            });
-            oDialog.setBindingContext(oEntryCtx);
-            oDialog.open();
+
+        Fragment.load({
+          name: "game.view.Fragments.CreateWord",
+          controller: this,
+          id: oView.getId(),
+        }).then(function (oDialog) {
+          oView.addDependent(oDialog);
+          var oEntryCtx = oView.getModel().createEntry("/Words", {
+            properties: {
+              ID: id,
+              Category_ID: categoryId,
+              createdAt: new Date(),
+              createdBy: "hanna.kaliada@leverx.com",
+              modifiedAt: new Date(),
+              modifiedBy: "hanna.kaliada@leverx.com",
+            },
           });
-        } else {
-          this.byId("createWordPopup").open();
-        }
+          oDialog.setBindingContext(oEntryCtx);
+          oDialog.open();
+        });
       },
 
       onMainPagePress: function () {
@@ -123,19 +122,16 @@ sap.ui.define(
       onEditCardPress: function (event) {
         let binding = event.getSource().getBindingContext();
         let oView = this.getView();
-        if (!this.byId("editWordPopup")) {
-          Fragment.load({
-            name: "game.view.Fragments.EditWord",
-            controller: this,
-            id: oView.getId(),
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            oDialog.setBindingContext(binding);
-            oDialog.open();
-          });
-        } else {
-          this.byId("editWordPopup").open();
-        }
+
+        Fragment.load({
+          name: "game.view.Fragments.EditWord",
+          controller: this,
+          id: oView.getId(),
+        }).then(function (oDialog) {
+          oView.addDependent(oDialog);
+          oDialog.setBindingContext(binding);
+          oDialog.open();
+        });
       },
       onDeleteCardPress: function (event) {
         let path = event.getSource().getBindingContext().getPath();
@@ -156,27 +152,26 @@ sap.ui.define(
       onEditCategoryPress: function () {
         let binding = this.getSplitAppObj().getCurrentDetailPage().getBindingContext();
         let oView = this.getView();
-        if (!this.byId("editCategoryPopup")) {
-          Fragment.load({
-            name: "game.view.Fragments.EditCategory",
-            controller: this,
-            id: oView.getId(),
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            oDialog.setBindingContext(binding);
-            oDialog.open();
-          });
-        } else {
-          this.byId("editCategoryPopup").open();
-        }
+
+        Fragment.load({
+          name: "game.view.Fragments.EditCategory",
+          controller: this,
+          id: oView.getId(),
+        }).then(function (oDialog) {
+          oView.addDependent(oDialog);
+          oDialog.setBindingContext(binding);
+          oDialog.open();
+        });
       },
       onSaveCategory: function () {
         this.getModel().submitChanges();
         this.byId("editCategoryPopup").close();
+        this.byId("editCategoryPopup").destroy();
       },
       onCancelEditCategory: function () {
         this.getModel().resetChanges();
         this.byId("editCategoryPopup").close();
+        this.byId("editCategoryPopup").destroy();
       },
       onDeleteCategoryPress: function () {
         let path = this.getSplitAppObj().getCurrentDetailPage().getBindingContext().getPath();

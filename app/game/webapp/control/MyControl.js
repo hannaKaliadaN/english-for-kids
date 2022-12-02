@@ -105,8 +105,9 @@ sap.ui.define(
             .attr("src", control.getSrcPicture())
             .class("image")
             .openEnd();
-          rm.close("div");
+          
         }
+        rm.close("div");
         rm.openStart("div", control)
           .class("card__face")
           .class("card__face--back")

@@ -83,13 +83,10 @@ sap.ui.define(
             { ...oWord, currentTranslation: "", isRight: false },
           ]);
       },
-      onChangeInput: function (oEvent) {
-        let rightWord = oEvent.getSource().getName();
-        let value = oEvent.getSource().getValue();
+      onChangeInput: function () {
+      
       },
-      formatIcon: function(sCurrentTranslation, translation){
-        debugger
-      },
+   
     });
   }
 );
