@@ -8,12 +8,8 @@ sap.ui.define(
 
     return Controller.extend("game.controller.Train", {
       onInit: function () {
-        this.getRouter()
-          .getRoute("Train")
-          .attachPatternMatched(this.onPatternMatched, this);
-        this.getOwnerComponent()
-          .getModel("helpModel")
-          .setProperty("/isVisibleWords", true);
+        this.getRouter().getRoute("Train").attachPatternMatched(this.onPatternMatched, this);
+        this.getOwnerComponent().getModel("helpModel").setProperty("/isVisibleWords", true);
       },
       getRouter: function () {
         return this.getOwnerComponent().getRouter();
@@ -21,9 +17,7 @@ sap.ui.define(
       onPatternMatched: function (oEvent) {
         var mRouteArguments = oEvent.getParameter("arguments");
         var sCategId = mRouteArguments.CategId;
-        this.getOwnerComponent()
-          .getModel("helpModel")
-          .setProperty("/isVisibleWords", true);
+        this.getOwnerComponent().getModel("helpModel").setProperty("/isVisibleWords", true);
         this.getModel()
           .metadataLoaded()
           .then(
@@ -60,33 +54,53 @@ sap.ui.define(
       onButtonResultesPress: function () {},
 
       onStartTrainPress: function () {
+        this.getView().getModel("helpModel").setProperty("/isVisibleWords", false);
+
+        // let context = this.getView().getBindingContext().getModel().mContexts;
+        // let aPaths = Object.keys(context);
+        // this.getView().getModel("helpModel").setProperty("/currentTrain", []);
+        // aPaths.forEach((sPath) => {
+        //   !sPath.includes("Categories") ? this.getNewObject(sPath) : null;
+        // });
+        // debugger
+      },
+      // getNewObject: function (sPath) {
+      //   let oWord = this.getView().getModel().getProperty(sPath);
+      //   let oCurrentTrainModel = this.getView().getModel("helpModel").getProperty("/currentTrain");
+      //   this.getView()
+      //     .getModel("helpModel")
+      //     .setProperty("/currentTrain", [
+      //       ...oCurrentTrainModel,
+      //       { ...oWord, currentTranslation: "qqqq" },
+      //     ]);
+      // },
+      // onChangeInput: function () {},
+      onResultsPress: function () {
+        this.getView().getModel("helpModel").setProperty("/isVisibleResults", true);
+        this.getView().getModel("helpModel").setProperty("/currentTrain/rightAnswers", 0);
+        this.getView().getModel("helpModel").setProperty("/currentTrain/wrongAnswers", 0);
+        let items = this.byId("trainCards").getItems();
         this.getView()
           .getModel("helpModel")
-          .setProperty("/isVisibleWords", false);
-
-        let context = this.getView().getBindingContext().getModel().mContexts;
-        let aPaths = Object.keys(context);
-        this.getView().getModel("helpModel").setProperty("/currentTrain", []);
-        aPaths.forEach((sPath) => {
-          !sPath.includes("Categories") ? this.getNewObject(sPath) : null;
+          .setProperty("/currentTrain/numberOfWords", items.length);
+        debugger;
+        items.forEach((item) => {
+          let isRight = item.getIsRight();
+          let currentIsRight = this.getView()
+            .getModel("helpModel")
+            .getProperty("/currentTrain/rightAnswers");
+          let currentIsWrong = this.getView()
+            .getModel("helpModel")
+            .getProperty("/currentTrain/wrongAnswers");
+          isRight
+            ? this.getView()
+                .getModel("helpModel")
+                .setProperty("/currentTrain/rightAnswers", (currentIsRight += 1))
+            : this.getView()
+                .getModel("helpModel")
+                .setProperty("/currentTrain/wrongAnswers", (currentIsWrong += 1));
         });
       },
-      getNewObject: function (sPath) {
-        let oWord = this.getView().getModel().getProperty(sPath);
-        let oCurrentTrainModel = this.getView()
-          .getModel("helpModel")
-          .getProperty("/currentTrain");
-        this.getView()
-          .getModel("helpModel")
-          .setProperty("/currentTrain", [
-            ...oCurrentTrainModel,
-            { ...oWord, currentTranslation: "", isRight: false },
-          ]);
-      },
-      onChangeInput: function () {
-      
-      },
-   
     });
   }
 );

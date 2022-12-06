@@ -89,12 +89,10 @@ sap.ui.define(
       onAddNewWordPress() {
         var oView = this.getView();
         let id = this.getId();
-        debugger;
         let categoryId = this.getSplitAppObj()
           .getCurrentDetailPage()
           .getBindingContext()
           .getObject().ID;
-
         Fragment.load({
           name: "game.view.Fragments.CreateWord",
           controller: this,
@@ -194,6 +192,43 @@ sap.ui.define(
             }
           },
         });
+      },
+      onChangeWord: function (oEvent) {
+        let value = oEvent.getParameter("value");
+        let valueForRequest = value.slice(value.indexOf(" ") + 1);
+
+        let path = this.byId("createWordPopup").getBindingContext().getPath();
+        let model = this.getModel();
+        debugger;
+        fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + valueForRequest)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.length) {
+              for (let i = 0; i < data[0].phonetics.length; i++) {
+                if (data[0].phonetics[i].audio !== "") {
+                  model.setProperty(path + "/audioSrc", data[0].phonetics[i].audio);
+                  break;
+                }
+              }
+            }
+          });
+
+
+
+        let options = {
+          method: "GET",
+          accessKey: "tb7EB4oWFcPivR0xWHqogkP5D7HhA0VZWHv8pyPyUMU",
+          headers: {
+            "Cache-control": "no-cache",
+            
+            "Secret Key": "rewP1MivCvkPExbeuf6G-qQmMeRuTOSl_J1T2XjrGb0",
+            "Content-type": "application/json",
+          },
+        };
+
+        fetch("https://api.unsplash.com/search/photos?page=1&query="+ valueForRequest, options)
+          .then((response) => response.json)
+          .then((data) => console.log(data));
       },
     });
   }

@@ -13,7 +13,7 @@
 						maxLength: 50,
 						minLength: 3
 						}
-					}" />
+					}" change='onChangeWord' />
                 <Label text="Translation" />
                 <Input required="true" value="{
                         path: 'translation',

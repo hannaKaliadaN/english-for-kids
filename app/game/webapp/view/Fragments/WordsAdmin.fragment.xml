@@ -5,7 +5,7 @@
         <headerContent>
             <Button text="Main page" press='onMainPagePress'></Button>
         </headerContent>
-        <HBox items="{Words}" id="words" wrap='Wrap'>
+        <HBox items="{Words}" id="words" wrap='Wrap' >
             <items>
                 <custom:MyControl header="{word}" flip="true" subheader="{translation}" srcPicture="{imageSrc}" isEdit="true" srcAudio="{audioSrc}" onEditPress='onEditCardPress' onDeletePress='onDeleteCardPress'/>
             </items>

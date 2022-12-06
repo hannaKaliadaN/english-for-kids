@@ -1,50 +1,34 @@
 <mvc:View controllerName="game.controller.Train"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns:custom="game.control"
-    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
     xmlns="sap.m">
     <Page title="Train page">
         <headerContent>
-            <Button text="Start train" press='onStartTrainPress'/>
+            <Button text="Start train" press='onStartTrainPress' visible="{helpModel>/isVisibleWords}"/>
+            <Button text="Results" press='onResultsPress' visible="{= !${helpModel>/isVisibleWords}}"/>
         </headerContent>
         <HBox items="{Words}" id="words" wrap="Wrap" visible="{helpModel>/isVisibleWords}">
             <items>
-                <custom:MyControl header="{word}" flip="true" subheader="{word}-{translation}" srcPicture="{imageSrc}" />
+                <custom:MyControl header="{word}" flip="true" subheader="{word}-{translation}" srcPicture="{imageSrc}" srcAudio="{audioSrc}"/>
             </items>
         </HBox>
-        <Table id='tableId' visible="{= !${helpModel>/isVisibleWords}}" items="{helpModel>/currentTrain}">
-            <columns>
-                <Column>
-                    <Label text="English" />
-                </Column>
-                <Column>
-                    <Label text="Russian" />
-                </Column>
-                <Column>
-                    <Label text="Check" />
-                </Column>
-            </columns>
+        <HBox items="{Words}" wrap="Wrap" id='trainCards' visible="{= !${helpModel>/isVisibleWords}}">
             <items>
-                <ColumnListItem id="columnListItem">
-                    <cells>
-                        <Text text="{
-                                path: 'helpModel>word',
-                                type: 'sap.ui.model.type.String',
-                                constraints: {
-                                    maxLength: 50,
-                                    minLength: 3
-                                }
-                                }" />
-                        <Input name="{helpModel>translation}" value="{helpModel>currentTranslation}" change="onChangeInput"/>
-                        <core:Icon
-                        src="sap-icon://accept"
-                        class="size2"
-                        color="{= ${helpModel>currentTranslation}.toLowerCase() === ${helpModel>translation} ? 'Positiv' : 'Negative'}" >
-                      
-                    </core:Icon>
-                    </cells>
-                </ColumnListItem>
+                <custom:CardWithSound header="{word}" srcAudio="{audioSrc}" isRight='false' rightTranslation="{translation}"/>
             </items>
-        </Table>
+        </HBox>
+        <VBox class="sapUiSmallMargin" >
+            <f:SimpleForm title="Results" visible="{helpModel>/isVisibleResults}">
+                <f:content>
+                    <Label text="Right Answers" />
+                    <Text text="{helpModel>/currentTrain/rightAnswers}" />
+                    <Label text="Wrong Answers" />
+                    <Text text="{helpModel>/currentTrain/wrongAnswers}" />
+                    <Label text="Number of words" />
+                    <Text text="{helpModel>/currentTrain/numberOfWords}" />
+                </f:content>
+            </f:SimpleForm>
+        </VBox>
     </Page>
 </mvc:View>
