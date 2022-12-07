@@ -1,10 +1,35 @@
 <mvc:View controllerName="game.controller.Train"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:custom="game.control"
+    xmlns:f="sap.ui.layout.form"
     xmlns="sap.m">
     <Page title="Train page">
         <headerContent>
-            <Button text="Main page" press="onMainPagePress" />
-            <Button text="Results" press="onButtonResultsPress" />
+            <Button text="Start train" press='onStartTrainPress' visible="{helpModel>/isVisibleWords}"/>
+            <Button text="Results" press='onResultsPress' visible="{= !${helpModel>/isVisibleWords}}"/>
+                <Button text="Main page" press='onMainPagePress' />
         </headerContent>
+        <HBox items="{Words}" id="words" wrap="Wrap" visible="{helpModel>/isVisibleWords}">
+            <items>
+                <custom:MyControl header="{word}" flip="true" subheader="{word}-{translation}" srcPicture="{imageSrc}" srcAudio="{audioSrc}"/>
+            </items>
+        </HBox>
+        <HBox items="{Words}" wrap="Wrap" id='trainCards' visible="{= !${helpModel>/isVisibleWords}}">
+            <items>
+                <custom:CardWithSound header="{word}" srcAudio="{audioSrc}" isRight='false' rightTranslation="{translation}"/>
+            </items>
+        </HBox>
+        <VBox class="sapUiSmallMargin" >
+            <f:SimpleForm title="Results" visible="{helpModel>/isVisibleResults}">
+                <f:content>
+                    <Label text="Right Answers" />
+                    <Text text="{helpModel>/currentTrain/rightAnswers}" />
+                    <Label text="Wrong Answers" />
+                    <Text text="{helpModel>/currentTrain/wrongAnswers}" />
+                    <Label text="Number of words" />
+                    <Text text="{helpModel>/currentTrain/numberOfWords}" />
+                </f:content>
+            </f:SimpleForm>
+        </VBox>
     </Page>
 </mvc:View>

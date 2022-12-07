@@ -6,9 +6,9 @@
             <Button text="Train" press='onButtonTrainPress' enabled="{helpModel>/isEnabled}"></Button>
           
         </headerContent>
-        <HBox items="{Words}" id="words">
+        <HBox items="{Words}" id="words" wrap="Wrap" >
             <items>
-                <custom:MyControl header="{word}" flip="true" subheader="{word}-{translation}" src="{imageSrc}" onButtonPress="onButtonPress" />
+                <custom:MyControl header="{word}" flip="true" isEdit="false" subheader="{word}-{translation}" srcPicture="{imageSrc}" srcAudio="{audioSrc}" />
             </items>
         </HBox> 
     </Page>

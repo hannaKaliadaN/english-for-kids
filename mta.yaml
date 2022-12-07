@@ -1,14 +1,14 @@
 _schema-version: "3.1"
-ID: english
+ID: project
 description: A simple CAP project.
 version: 1.0.0
 modules:
-- name: english-srv
+- name: project-srv
   type: nodejs
   path: gen/srv
   requires:
-  - name: english-db
-  - name: english-auth
+  - name: project-db
+  - name: project-auth
   provides:
   - name: srv-api
     properties:
@@ -17,56 +17,18 @@ modules:
     buildpack: nodejs_buildpack
   build-parameters:
     builder: npm-ci
-- name: english-db-deployer
+- name: project-db-deployer
   type: hdb
   path: gen/db
   requires:
-  - name: english-db
-  - name: english-uaa
+  - name: project-db
   parameters:
     buildpack: nodejs_buildpack
-- name: english-destinations
-  type: com.sap.application.content
-  requires:
-  - name: english-uaa
-    parameters:
-      service-key:
-        name: english-uaa-key
-  - name: english-html5-repo-host
-    parameters:
-      service-key:
-        name: english-html5-repo-host-key
-  - name: srv-api
-  - name: english-destination
-    parameters:
-      content-target: true
-  parameters:
-    content:
-      instance:
-        destinations:
-        - Authentication: OAuth2UserTokenExchange
-          Name: english-app-srv
-          TokenServiceInstanceName: english-uaa
-          TokenServiceKeyName: english-uaa-key
-          URL: ~{srv-api/srv-url}
-          sap.cloud.service: english.service
-        - Name: english-html5-repo-host
-          ServiceInstanceName: english-html5-repo-host
-          ServiceKeyName: english-html5-repo-host-key
-          sap.cloud.service: english.service
-        - Authentication: OAuth2UserTokenExchange
-          Name: english-uaa
-          ServiceInstanceName: english-uaa
-          ServiceKeyName: english-uaa-key
-          sap.cloud.service: english.service
-        existing_destinations_policy: update
-  build-parameters:
-    no-source: true
-- name: english-app-content
+- name: project-app-content
   type: com.sap.application.content
   path: .
   requires:
-  - name: english-html5-repo-host
+  - name: project-html5-repo-host
     parameters:
       content-target: true
   build-parameters:
@@ -86,13 +48,75 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+- name: project-destinations
+  type: com.sap.application.content
+  requires:
+  - name: project-uaa
+    parameters:
+      service-key:
+        name: project-uaa-key
+  - name: project-html5-repo-host
+    parameters:
+      service-key:
+        name: project-html5-repo-host-key
+  - name: srv-api
+  - name: project-destination-service
+    parameters:
+      content-target: true
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Authentication: OAuth2UserTokenExchange
+          Name: project-app-srv
+          TokenServiceInstanceName: project-uaa
+          TokenServiceKeyName: project-uaa-key
+          URL: ~{srv-api/srv-url}
+          sap.cloud.service: project.service
+        - Name: project-html5-repo-host
+          ServiceInstanceName: project-html5-repo-host
+          ServiceKeyName: project-html5-repo-host-key
+          sap.cloud.service: project.service
+        - Authentication: OAuth2UserTokenExchange
+          Name: project-uaa
+          ServiceInstanceName: project-uaa
+          ServiceKeyName: project-uaa-key
+          sap.cloud.service: project.service
+        existing_destinations_policy: update
+  build-parameters:
+    no-source: true
 resources:
-- name: english-html5-repo-host
+- name: project-uaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config: null
+    path: ./xs-security.json
+    role-collections: null
+    service: xsuaa
+    service-plan: application
+    tenant-mode: dedicated
+    xsappname: project-${space}
+- name: project-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: project-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: project-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: project-repo-host
   type: org.cloudfoundry.managed-service
   parameters:
     service: html5-apps-repo
+    service-name: project-html5-srv
     service-plan: app-host
-- name: english-destination
+- name: project-destination-service
   type: org.cloudfoundry.managed-service
   parameters:
     config:
@@ -106,40 +130,15 @@ resources:
             Type: HTTP
             URL: https://ui5.sap.com
           existing_destinations_policy: update
+      version: 1.0.0
     service: destination
+    service-name: project-destination-service
     service-plan: lite
-- name: english-db
-  type: com.sap.xs.hdi-container
-  parameters:
-    service: hana
-    service-plan: hdi-shared
-- name: english-uaa
+- name: project-html5-repo-host
   type: org.cloudfoundry.managed-service
   parameters:
-    config:
-      role-collections:
-      - description: Game
-        name: Game-${space}
-        role-template-references:
-        - $XSAPPNAME.GameManager
-      - description: View Game
-        name: GameViewer-${space}
-        role-template-references:
-        - $XSAPPNAME.GameViewer
-      tenant-mode: dedicated
-      xsappname: english-${space}
-    path: ./xs-security.json
-    service: xsuaa
-    service-plan: application
-- name: english-auth
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      tenant-mode: dedicated
-      xsappname: english-${org}-${space}
-    path: ./xs-security.json
-    service: xsuaa
-    service-plan: application
+    service: html5-apps-repo
+    service-plan: app-host
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
@@ -147,4 +146,6 @@ build-parameters:
   before-all:
   - builder: custom
     commands:
+    - npm install --production
     - npx -p @sap/cds-dk cds build --production
+    - npx rimraf gen/db/src/gen/data

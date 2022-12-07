@@ -1,23 +1,39 @@
 sap.ui.define(
-  [
-    "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel",
-    "sap/ui/Device",
-  ],
+  ["sap/ui/core/mvc/Controller"],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (Controller, JSONModel, Device) {
+  function (Controller) {
     "use strict";
 
     return Controller.extend("game.controller.Train", {
       onInit: function () {
-        // var oDeviceModel = new JSONModel(Device);
-        // oDeviceModel.setDefaultBindingMode("OneWay");
-        // this.getView().setModel(oDeviceModel, "device");
+        this.getRouter().getRoute("Train").attachPatternMatched(this.onPatternMatched, this);
+        this.getOwnerComponent().getModel("helpModel").setProperty("/isVisibleWords", true);
+      },
+      getRouter: function () {
+        return this.getOwnerComponent().getRouter();
+      },
+      onPatternMatched: function (oEvent) {
+        var mRouteArguments = oEvent.getParameter("arguments");
+        var sCategId = mRouteArguments.CategId;
+        this.getOwnerComponent().getModel("helpModel").setProperty("/isVisibleWords", true);
+        this.getModel()
+          .metadataLoaded()
+          .then(
+            function () {
+              var sKey = this.getModel().createKey("/Categories", {
+                ID: sCategId,
+                parameters: { expand: "Words" },
+              });
+
+              this.getView().bindObject({
+                path: sKey,
+              });
+            }.bind(this)
+          );
       },
 
-      onAfterRendering: function () {},
       getModel: function () {
         return this.getOwnerComponent().getModel();
       },
@@ -27,23 +43,7 @@ sap.ui.define(
       navigateTo: function (sRoute, oParam) {
         this.getRouter().navTo(sRoute, oParam);
       },
-      onTilePress: function (oEvent) {
-        var oSource = oEvent.getSource();
-        var oContext = oSource.getBindingContext();
-        this.getSplitAppObj().toDetail(
-          this.createId("pageWord"),
-          "slide",
-          oContext,
-          {}
-        );
 
-        this.getSplitAppObj().getDetailPages()[0].setBindingContext(oContext);
-        this.getView().getModel("helpModel").setProperty("/isEnabled", true);
-      },
-      getSplitAppObj: function () {
-        var result = this.byId("english");
-        return result;
-      },
       onButtonPress: function (oEvent) {},
       onMainPagePress: function () {
         this.navigateTo("Categories", {});
@@ -52,6 +52,55 @@ sap.ui.define(
         this.navigateTo("Results", {});
       },
       onButtonResultesPress: function () {},
+
+      onStartTrainPress: function () {
+        this.getView().getModel("helpModel").setProperty("/isVisibleWords", false);
+
+        // let context = this.getView().getBindingContext().getModel().mContexts;
+        // let aPaths = Object.keys(context);
+        // this.getView().getModel("helpModel").setProperty("/currentTrain", []);
+        // aPaths.forEach((sPath) => {
+        //   !sPath.includes("Categories") ? this.getNewObject(sPath) : null;
+        // });
+        // debugger
+      },
+      // getNewObject: function (sPath) {
+      //   let oWord = this.getView().getModel().getProperty(sPath);
+      //   let oCurrentTrainModel = this.getView().getModel("helpModel").getProperty("/currentTrain");
+      //   this.getView()
+      //     .getModel("helpModel")
+      //     .setProperty("/currentTrain", [
+      //       ...oCurrentTrainModel,
+      //       { ...oWord, currentTranslation: "qqqq" },
+      //     ]);
+      // },
+      // onChangeInput: function () {},
+      onResultsPress: function () {
+        this.getView().getModel("helpModel").setProperty("/isVisibleResults", true);
+        this.getView().getModel("helpModel").setProperty("/currentTrain/rightAnswers", 0);
+        this.getView().getModel("helpModel").setProperty("/currentTrain/wrongAnswers", 0);
+        let items = this.byId("trainCards").getItems();
+        this.getView()
+          .getModel("helpModel")
+          .setProperty("/currentTrain/numberOfWords", items.length);
+        debugger;
+        items.forEach((item) => {
+          let isRight = item.getIsRight();
+          let currentIsRight = this.getView()
+            .getModel("helpModel")
+            .getProperty("/currentTrain/rightAnswers");
+          let currentIsWrong = this.getView()
+            .getModel("helpModel")
+            .getProperty("/currentTrain/wrongAnswers");
+          isRight
+            ? this.getView()
+                .getModel("helpModel")
+                .setProperty("/currentTrain/rightAnswers", (currentIsRight += 1))
+            : this.getView()
+                .getModel("helpModel")
+                .setProperty("/currentTrain/wrongAnswers", (currentIsWrong += 1));
+        });
+      },
     });
   }
 );

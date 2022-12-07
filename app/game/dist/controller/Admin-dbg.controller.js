@@ -4,21 +4,18 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "sap/ui/Device",
     "sap/ui/core/Fragment",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (Controller, JSONModel, Device, Fragment) {
+  function (Controller, JSONModel, Device, Fragment, MessageBox, MessageToast) {
     "use strict";
 
     return Controller.extend("game.controller.Admin", {
-      onInit: function () {
-        // var oDeviceModel = new JSONModel(Device);
-        // oDeviceModel.setDefaultBindingMode("OneWay");
-        // this.getView().setModel(oDeviceModel, "device");
-      },
+      onInit: function () {},
 
-      onAfterRendering: function () {},
       getModel: function () {
         return this.getOwnerComponent().getModel();
       },
@@ -31,66 +28,207 @@ sap.ui.define(
       onTilePress: function (oEvent) {
         var oSource = oEvent.getSource();
         var oContext = oSource.getBindingContext();
-        this.getSplitAppObj().toDetail(
-          this.createId("pageWord"),
-          "slide",
-          oContext,
-          {}
-        );
-
-        this.getSplitAppObj().getDetailPages()[0].setBindingContext(oContext);
-        this.getView().getModel("helpModel").setProperty("/isEnabled", true);
+        this.getSplitAppObj().toDetail(this.createId("pageWord"), "slide", oContext, {});
+        this.getSplitAppObj().getCurrentDetailPage().setBindingContext(oContext);
+        this.getView().getModel("helpModel").setProperty("/isVisible", true);
       },
       getSplitAppObj: function () {
-        var result = this.byId("admin");
-        return result;
+        return this.byId("admin");
       },
-      onButtonPress: function (oEvent) {},
-
+      getId() {
+        return Number(new Date().getTime().toString().slice(9));
+      },
       onAddNewCategoryPress: function () {
         var oView = this.getView();
-        if (!this.byId("createCategoryPopup")) {
-          Fragment.load({
-            name: "game.view.Fragments.CreateCategory",
-            controller: this,
-            id: oView.getId(),
-          }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            var oEntryCtx = oView.getModel().createEntry("/Categories", {
-              properties: {
-                createdAt: "/Date(1619481600000+0000)/",
-                createdBy: "hanna.kaliada@leverx.com",
-                modifiedAt: "/Date(1669029021552+0000)/",
-                modifiedBy: "anonymous",
-                ID: "23311",
-              },
-            });
-            oDialog.setBindingContext(oEntryCtx);
-            oDialog.open();
+        let id = this.getId();
+        Fragment.load({
+          name: "game.view.Fragments.CreateCategory",
+          controller: this,
+          id: oView.getId(),
+        }).then(function (oDialog) {
+          oView.addDependent(oDialog);
+          var oEntryCtx = oView.getModel().createEntry("/Categories", {
+            properties: {
+              ID: id,
+            },
           });
-        } else {
-          this.byId("createCategoryPopup").open();
-        }
-
-        // oView.addDependent(this.oDialog);
-
-        // var oEntryCtx = this._getModel().createEntry("/Categories", {
-        //   properties: {
-        //     ID: nId,
-        //   },
-        //   headers: { "Content-ID": nId },
-        // });
-        // this.oDialog.setBindingContext(oEntryCtx);
-        // this.oDialog.open();
+          oDialog.setBindingContext(oEntryCtx);
+          oDialog.open();
+        });
       },
       onCreateCategory: function () {
-        debugger;
-        this.getView().getModel().submitChanges();
+        this.getModel().submitChanges();
         this.byId("createCategoryPopup").close();
+        this.byId("createCategoryPopup").destroy();
+      },
+      onCreateWord: function () {
+        this.getModel().submitChanges();
+        this.byId("createWordPopup").close();
+        this.byId("createWordPopup").destroy();
       },
       onCancelCategory: function () {
-        this.getView().getModel().resetChanges();
+        this.getModel().resetChanges();
         this.byId("createCategoryPopup").close();
+        this.byId("createCategoryPopup").destroy();
+      },
+      onCancelWord: function () {
+        this.getModel().resetChanges();
+        this.byId("createWordPopup").close();
+        this.byId("createWordPopup").destroy();
+      },
+      onCancelEditWord: function () {
+        this.getModel().resetChanges();
+        this.byId("editWordPopup").close();
+        this.byId("editWordPopup").destroy();
+      },
+      onSaveWord: function () {
+        this.getModel().submitChanges();
+        this.byId("editWordPopup").close();
+        this.byId("editWordPopup").destroy();
+      },
+      onAddNewWordPress() {
+        var oView = this.getView();
+        let id = this.getId();
+        let categoryId = this.getSplitAppObj()
+          .getCurrentDetailPage()
+          .getBindingContext()
+          .getObject().ID;
+        Fragment.load({
+          name: "game.view.Fragments.CreateWord",
+          controller: this,
+          id: oView.getId(),
+        }).then(function (oDialog) {
+          oView.addDependent(oDialog);
+          var oEntryCtx = oView.getModel().createEntry("/Words", {
+            properties: {
+              ID: id,
+              Category_ID: categoryId,
+              createdAt: new Date(),
+              createdBy: "hanna.kaliada@leverx.com",
+              modifiedAt: new Date(),
+              modifiedBy: "hanna.kaliada@leverx.com",
+            },
+          });
+          oDialog.setBindingContext(oEntryCtx);
+          oDialog.open();
+        });
+      },
+
+      onMainPagePress: function () {
+        this.navigateTo("Categories", {});
+      },
+      onEditCardPress: function (event) {
+        let binding = event.getSource().getBindingContext();
+        let oView = this.getView();
+
+        Fragment.load({
+          name: "game.view.Fragments.EditWord",
+          controller: this,
+          id: oView.getId(),
+        }).then(function (oDialog) {
+          oView.addDependent(oDialog);
+          oDialog.setBindingContext(binding);
+          oDialog.open();
+        });
+      },
+      onDeleteCardPress: function (event) {
+        let path = event.getSource().getBindingContext().getPath();
+        let oView = this.getView();
+        MessageBox.confirm("Do you want to delete this item?", {
+          onClose: function (oAction) {
+            if (oAction === MessageBox.Action.OK) {
+              oView.getModel().remove(path);
+              oView.getModel().submitChanges();
+              MessageToast.show("Success");
+            }
+            if (oAction === MessageBox.Action.CANCEL) {
+              oView.getModel().resetChanges();
+            }
+          },
+        });
+      },
+      onEditCategoryPress: function () {
+        let binding = this.getSplitAppObj().getCurrentDetailPage().getBindingContext();
+        let oView = this.getView();
+
+        Fragment.load({
+          name: "game.view.Fragments.EditCategory",
+          controller: this,
+          id: oView.getId(),
+        }).then(function (oDialog) {
+          oView.addDependent(oDialog);
+          oDialog.setBindingContext(binding);
+          oDialog.open();
+        });
+      },
+      onSaveCategory: function () {
+        this.getModel().submitChanges();
+        this.byId("editCategoryPopup").close();
+        this.byId("editCategoryPopup").destroy();
+      },
+      onCancelEditCategory: function () {
+        this.getModel().resetChanges();
+        this.byId("editCategoryPopup").close();
+        this.byId("editCategoryPopup").destroy();
+      },
+      onDeleteCategoryPress: function () {
+        let path = this.getSplitAppObj().getCurrentDetailPage().getBindingContext().getPath();
+        let oView = this.getView();
+        let itemsWords = this.byId(Fragment.createId("pageWord", "words")).getItems();
+        let aPaths = itemsWords.map((item) => item.getBindingContext().getPath());
+
+        MessageBox.confirm("Do you want to delete this category?", {
+          onClose: function (oAction) {
+            if (oAction === MessageBox.Action.OK) {
+              oView.getModel().remove(path);
+              aPaths.forEach((path) => oView.getModel().remove(path));
+              oView.getModel().submitChanges();
+              oView.getModel("helpModel").setProperty("/isVisible", false);
+              oView.getModel().updateBindings();
+              MessageToast.show("Success");
+            }
+            if (oAction === MessageBox.Action.CANCEL) {
+              oView.getModel().resetChanges();
+            }
+          },
+        });
+      },
+      onChangeWord: function (oEvent) {
+        let value = oEvent.getParameter("value");
+        let valueForRequest = value.slice(value.indexOf(" ") + 1);
+
+        let path = this.byId("createWordPopup").getBindingContext().getPath();
+        let model = this.getModel();
+        debugger;
+        fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + valueForRequest)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.length) {
+              for (let i = 0; i < data[0].phonetics.length; i++) {
+                if (data[0].phonetics[i].audio !== "") {
+                  model.setProperty(path + "/audioSrc", data[0].phonetics[i].audio);
+                  break;
+                }
+              }
+            }
+          });
+
+
+
+        let options = {
+          method: "GET",
+          accessKey: "tb7EB4oWFcPivR0xWHqogkP5D7HhA0VZWHv8pyPyUMU",
+          headers: {
+            "Cache-control": "no-cache",
+            
+            "Secret Key": "rewP1MivCvkPExbeuf6G-qQmMeRuTOSl_J1T2XjrGb0",
+            "Content-type": "application/json",
+          },
+        };
+
+        fetch("https://api.unsplash.com/search/photos?page=1&query="+ valueForRequest, options)
+          .then((response) => response.json)
+          .then((data) => console.log(data));
       },
     });
   }

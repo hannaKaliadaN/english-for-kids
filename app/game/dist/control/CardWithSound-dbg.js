@@ -14,21 +14,17 @@ sap.ui.define(
     return Control.extend("game.control.CardWithSound", {
       metadata: {
         properties: {
-          header: { type: "string", defaultValue: "" },
-          srcAudio: { type: "string", defaultValue: "" },
+          header: "string",
+          srcAudio: "string",
           isRight: "boolean",
-          rightTranslation: { type: "string", defaultValue: "" },
-          currentTranslation: { type: "string", defaultValue: "" },
-          editable: { type: "boolean", defaultValue: "true" },
+          rightTranslation: "string",
+          currentTranslation: "string",
           typeOfButton: { type: "sap.m.ButtonType", defaultValue: "Neutral" },
           valueInput: { type: "string", defaultValue: "" },
         },
         events: {},
       },
       init: function () {},
-      setEditable: function (editable) {
-        this.setProperty("editable", editable);
-      },
       setHeader: function (header) {
         this.setProperty("header", header);
       },
@@ -101,7 +97,6 @@ sap.ui.define(
           new Input({
             placeholder: "Translation:",
             value: control.getValueInput(),
-            editable: control.getEditable(),
             change: (event) => control.onCheck(event, control),
           }).addStyleClass("input" + control.getHeader().replace(/\s/g, ""))
         );
@@ -111,7 +106,6 @@ sap.ui.define(
           new Button({
             icon: "sap-icon://accept",
             type: control.getTypeOfButton(),
-            enabled: control.getEditable(),
             press: (event) => control.onCheck(event, control),
           }).addStyleClass("check")
         );

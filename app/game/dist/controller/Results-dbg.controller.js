@@ -1,18 +1,13 @@
 sap.ui.define(
-  [
-    "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel",
-    "sap/ui/Device",
-  ],
+  ["sap/ui/core/mvc/Controller"],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (Controller, JSONModel, Device) {
+  function (Controller) {
     "use strict";
 
     return Controller.extend("game.controller.Results", {
-      onInit: function () {
-      },
+      onInit: function () {},
 
       onAfterRendering: function () {},
       getModel: function () {
@@ -24,9 +19,9 @@ sap.ui.define(
       navigateTo: function (sRoute, oParam) {
         this.getRouter().navTo(sRoute, oParam);
       },
-      onMainPagePress:function(){
-        this.navigateTo("Categories", {})
-      }
+      onMainPagePress: function () {
+        this.navigateTo("Categories", {});
+      },
     });
   }
 );

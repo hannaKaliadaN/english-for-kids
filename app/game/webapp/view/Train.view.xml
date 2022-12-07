@@ -7,6 +7,7 @@
         <headerContent>
             <Button text="Start train" press='onStartTrainPress' visible="{helpModel>/isVisibleWords}"/>
             <Button text="Results" press='onResultsPress' visible="{= !${helpModel>/isVisibleWords}}"/>
+                <Button text="Main page" press='onMainPagePress' />
         </headerContent>
         <HBox items="{Words}" id="words" wrap="Wrap" visible="{helpModel>/isVisibleWords}">
             <items>
@@ -15,7 +16,7 @@
         </HBox>
         <HBox items="{Words}" wrap="Wrap" id='trainCards' visible="{= !${helpModel>/isVisibleWords}}">
             <items>
-                <custom:CardWithSound header="{word}" srcAudio="{audioSrc}" isRight='false' rightTranslation="{translation}"/>
+                <custom:CardWithSound header="{word}" srcAudio="{audioSrc}" isRight='false' rightTranslation="{translation}" editable="{= !${helpModel>/isVisibleResults}}"/>
             </items>
         </HBox>
         <VBox class="sapUiSmallMargin" >

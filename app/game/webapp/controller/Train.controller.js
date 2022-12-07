@@ -15,9 +15,10 @@ sap.ui.define(
         return this.getOwnerComponent().getRouter();
       },
       onPatternMatched: function (oEvent) {
+        this.getOwnerComponent().getModel("helpModel").setProperty("/isVisibleResults", false);
+        this.getOwnerComponent().getModel("helpModel").setProperty("/isVisibleWords", true);
         var mRouteArguments = oEvent.getParameter("arguments");
         var sCategId = mRouteArguments.CategId;
-        this.getOwnerComponent().getModel("helpModel").setProperty("/isVisibleWords", true);
         this.getModel()
           .metadataLoaded()
           .then(

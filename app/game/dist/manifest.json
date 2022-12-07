@@ -92,7 +92,8 @@
                     "synchronizationMode": "None",
                     "operationMode": "Server",
                     "autoExpandSelect": true,
-                    "earlyRequests": true
+                    "earlyRequests": true,
+                    "defaultBindingMode": "TwoWay"
                 },
                 "useBatch": false
             },
@@ -176,6 +177,6 @@
     },
     "sap.cloud": {
         "public": true,
-        "service": "english.service"
+        "service": "project.service"
     }
 }

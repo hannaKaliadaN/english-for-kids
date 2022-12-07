@@ -5,7 +5,7 @@
     {
       "source": "^v2/(.*)$",
       "target": "v2/$1",
-      "destination": "english-app-srv",
+      "destination": "project-app-srv",
       "authenticationType": "xsuaa",
       "csrfProtection": false
     },

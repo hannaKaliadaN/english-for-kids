@@ -96,7 +96,6 @@
                     "defaultBindingMode": "TwoWay"
                 },
                 "useBatch": false
-                
             },
             "helpModel": {
                 "dataSource": "helpModel",
@@ -178,6 +177,6 @@
     },
     "sap.cloud": {
         "public": true,
-        "service": "english.service"
+        "service": "project.service"
     }
 }
