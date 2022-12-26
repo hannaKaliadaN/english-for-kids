@@ -1,7 +1,7 @@
 /**
  * eslint-disable @sap/ui5-jsdocs/no-jsdoc
  */
-
+//  sap.ui.getCore().loadLibrary("lib.myLibrary", "./../lib.myLibrary");
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
@@ -29,6 +29,8 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+                // 
+              
             }
         });
     }

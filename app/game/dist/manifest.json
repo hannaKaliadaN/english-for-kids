@@ -71,7 +71,8 @@
                 "sap.ui.comp": {},
                 "sap.ui.generic.app": {},
                 "sap.ui.table": {},
-                "sap.ushell": {}
+                "sap.ushell": {},
+                "lib.myLibrary": {}
             }
         },
         "contentDensities": {
@@ -94,8 +95,7 @@
                     "autoExpandSelect": true,
                     "earlyRequests": true,
                     "defaultBindingMode": "TwoWay"
-                },
-                "useBatch": false
+                }
             },
             "helpModel": {
                 "dataSource": "helpModel",
@@ -173,10 +173,13 @@
             "type": "XML",
             "async": true,
             "id": "App"
+        },
+        "resourceRoots": {
+            "lib.myLibrary": "./../../lib.myLibrary/src/lib/myLibrary"
         }
     },
     "sap.cloud": {
         "public": true,
-        "service": "project.service"
+        "service": "english.service"
     }
 }

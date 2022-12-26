@@ -22,6 +22,7 @@ modules:
   path: gen/db
   requires:
   - name: project-db
+  - name: project-uaa
   parameters:
     buildpack: nodejs_buildpack
 - name: project-app-content
@@ -72,16 +73,16 @@ modules:
           TokenServiceInstanceName: project-uaa
           TokenServiceKeyName: project-uaa-key
           URL: ~{srv-api/srv-url}
-          sap.cloud.service: project.service
+          sap.cloud.service: english.service
         - Name: project-html5-repo-host
           ServiceInstanceName: project-html5-repo-host
           ServiceKeyName: project-html5-repo-host-key
-          sap.cloud.service: project.service
+          sap.cloud.service: english.service
         - Authentication: OAuth2UserTokenExchange
           Name: project-uaa
           ServiceInstanceName: project-uaa
           ServiceKeyName: project-uaa-key
-          sap.cloud.service: project.service
+          sap.cloud.service: english.service
         existing_destinations_policy: update
   build-parameters:
     no-source: true

@@ -1,6 +1,6 @@
 <mvc:View controllerName="game.controller.Train"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns:custom="game.control"
+    xmlns:lib="lib.myLibrary"
     xmlns:f="sap.ui.layout.form"
     xmlns="sap.m">
     <Page title="Train page">
@@ -11,12 +11,12 @@
         </headerContent>
         <HBox items="{Words}" id="words" wrap="Wrap" visible="{helpModel>/isVisibleWords}">
             <items>
-                <custom:MyControl header="{word}" flip="true" subheader="{word}-{translation}" srcPicture="{imageSrc}" srcAudio="{audioSrc}"/>
+                <lib:FlipCard header="{word}" flip="true" subheader="{word}-{translation}" srcPicture="{imageSrc}" srcAudio="{audioSrc}"/>
             </items>
         </HBox>
         <HBox items="{Words}" wrap="Wrap" id='trainCards' visible="{= !${helpModel>/isVisibleWords}}">
             <items>
-                <custom:CardWithSound header="{word}" srcAudio="{audioSrc}" isRight='false' rightTranslation="{translation}"/>
+                <lib:CardWithSound header="{word}" srcAudio="{audioSrc}" isRight='false' rightTranslation="{translation}" editable="{= !${helpModel>/isVisibleResults}}"/>
             </items>
         </HBox>
         <VBox class="sapUiSmallMargin" >

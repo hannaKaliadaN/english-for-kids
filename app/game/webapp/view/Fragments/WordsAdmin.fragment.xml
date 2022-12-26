@@ -1,4 +1,4 @@
-<core:FragmentDefinition xmlns:custom="game.control"
+<core:FragmentDefinition xmlns:custom="lib.myLibrary"
     xmlns:core="sap.ui.core"
     xmlns="sap.m">
     <Page id="pageWord" title="{i18n>title}" floatingFooter="true" showFooter="{helpModel>/isVisible}">
@@ -7,7 +7,7 @@
         </headerContent>
         <HBox items="{Words}" id="words" wrap='Wrap' >
             <items>
-                <custom:MyControl header="{word}" flip="true" subheader="{translation}" srcPicture="{imageSrc}" isEdit="true" srcAudio="{audioSrc}" onEditPress='onEditCardPress' onDeletePress='onDeleteCardPress'/>
+                <custom:FlipCard header="{word}" flip="true" subheader="{translation}" srcPicture="{imageSrc}" isEdit="true" srcAudio="{audioSrc}" onEditPress='onEditCardPress' onDeletePress='onDeleteCardPress'/>
             </items>
         </HBox>
         <GenericTile visible="{helpModel>/isVisible}" class="sapUiTinyMarginBegin sapUiTinyMarginTop" header="Add new word" press="onAddNewWordPress" backgroundImage='sap-icon://add' >

@@ -1,4 +1,4 @@
-<core:FragmentDefinition xmlns:custom="game.control"
+<core:FragmentDefinition xmlns:custom="lib.myLibrary"
     xmlns:core="sap.ui.core"
     xmlns="sap.m">
     <Page id="pageWord" title="{i18n>title}">
@@ -8,7 +8,7 @@
         </headerContent>
         <HBox items="{Words}" id="words" wrap="Wrap" >
             <items>
-                <custom:MyControl header="{word}" flip="true" isEdit="false" subheader="{word}-{translation}" srcPicture="{imageSrc}" srcAudio="{audioSrc}" />
+                <custom:FlipCard header="{word}" flip="true" isEdit="false" subheader="{word}-{translation}" srcPicture="{imageSrc}" srcAudio="{audioSrc}" />
             </items>
         </HBox> 
     </Page>
