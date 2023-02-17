@@ -1,45 +1,28 @@
 sap.ui.define(
   [
-    "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel",
-    "sap/ui/Device",
+    "./BaseController",
     "sap/ui/core/Fragment",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
   ],
-  /**
-   * @param {typeof sap.ui.core.mvc.Controller} Controller
-   */
-  function (Controller, JSONModel, Device, Fragment, MessageBox, MessageToast) {
+
+  function (BaseController, Fragment, MessageBox, MessageToast) {
     "use strict";
 
-    return Controller.extend("game.controller.Admin", {
-      onInit: function () {},
-
-      getModel: function () {
-        return this.getOwnerComponent().getModel();
-      },
-      getRouter: function () {
-        return this.getOwnerComponent().getRouter();
-      },
-      navigateTo: function (sRoute, oParam) {
-        this.getRouter().navTo(sRoute, oParam);
-      },
+    return BaseController.extend("game.controller.Admin", {
       onTilePress: function (oEvent) {
-        var oSource = oEvent.getSource();
-        var oContext = oSource.getBindingContext();
-        this.getSplitAppObj().toDetail(this.createId("pageWord"), "slide", oContext, {});
+        let oSource = oEvent.getSource();
+        let oContext = oSource.getBindingContext();
+        this.getSplitAppObj().toDetail(this.createId("idWordPage"), "slide", oContext, {});
         this.getSplitAppObj().getCurrentDetailPage().setBindingContext(oContext);
         this.getView().getModel("helpModel").setProperty("/isVisible", true);
       },
       getSplitAppObj: function () {
-        return this.byId("admin");
+        return this.byId("idAdminPage");
       },
-      getId() {
-        return Number(new Date().getTime().toString().slice(9));
-      },
+
       onAddNewCategoryPress: function () {
-        var oView = this.getView();
+        let oView = this.getView();
         let id = this.getId();
         Fragment.load({
           name: "game.view.Fragments.CreateCategory",
@@ -47,7 +30,7 @@ sap.ui.define(
           id: oView.getId(),
         }).then(function (oDialog) {
           oView.addDependent(oDialog);
-          var oEntryCtx = oView.getModel().createEntry("/Categories", {
+          let oEntryCtx = oView.getModel().createEntry("/Categories", {
             properties: {
               ID: id,
             },
@@ -87,7 +70,7 @@ sap.ui.define(
         this.byId("editWordPopup").destroy();
       },
       onAddNewWordPress() {
-        var oView = this.getView();
+        let oView = this.getView();
         let id = this.getId();
         let categoryId = this.getSplitAppObj()
           .getCurrentDetailPage()
@@ -99,7 +82,7 @@ sap.ui.define(
           id: oView.getId(),
         }).then(function (oDialog) {
           oView.addDependent(oDialog);
-          var oEntryCtx = oView.getModel().createEntry("/Words", {
+          let oEntryCtx = oView.getModel().createEntry("/Words", {
             properties: {
               ID: id,
               Category_ID: categoryId,
@@ -174,9 +157,8 @@ sap.ui.define(
       onDeleteCategoryPress: function () {
         let path = this.getSplitAppObj().getCurrentDetailPage().getBindingContext().getPath();
         let oView = this.getView();
-        let itemsWords = this.byId(Fragment.createId("pageWord", "words")).getItems();
+        let itemsWords = this.byId(Fragment.createId("idWordPage", "words")).getItems();
         let aPaths = itemsWords.map((item) => item.getBindingContext().getPath());
-
         MessageBox.confirm("Do you want to delete this category?", {
           onClose: function (oAction) {
             if (oAction === MessageBox.Action.OK) {
@@ -196,10 +178,8 @@ sap.ui.define(
       onChangeWord: function (oEvent) {
         let value = oEvent.getParameter("value");
         let valueForRequest = value.slice(value.indexOf(" ") + 1);
-
         let path = this.byId("createWordPopup").getBindingContext().getPath();
         let model = this.getModel();
-        debugger;
         fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + valueForRequest)
           .then((response) => response.json())
           .then((data) => {
@@ -212,23 +192,18 @@ sap.ui.define(
               }
             }
           });
-
-
-
-        let options = {
-          method: "GET",
-          accessKey: "tb7EB4oWFcPivR0xWHqogkP5D7HhA0VZWHv8pyPyUMU",
-          headers: {
-            "Cache-control": "no-cache",
-            
-            "Secret Key": "rewP1MivCvkPExbeuf6G-qQmMeRuTOSl_J1T2XjrGb0",
-            "Content-type": "application/json",
-          },
-        };
-
-        fetch("https://api.unsplash.com/search/photos?page=1&query="+ valueForRequest, options)
-          .then((response) => response.json)
-          .then((data) => console.log(data));
+        // let options = {
+        //   method: "GET",
+        //   accessKey: "tb7EB4oWFcPivR0xWHqogkP5D7HhA0VZWHv8pyPyUMU",
+        //   headers: {
+        //     "Cache-control": "no-cache",
+        //     "Secret Key": "rewP1MivCvkPExbeuf6G-qQmMeRuTOSl_J1T2XjrGb0",
+        //     "Content-type": "application/json",
+        //   },
+        // };
+        // fetch("https://api.unsplash.com/search/photos?page=1&query=" + valueForRequest, options)
+        //   .then((response) => response.json)
+        //   .then((data) => console.log(data));
       },
     });
   }

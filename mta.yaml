@@ -8,7 +8,7 @@ modules:
   path: gen/srv
   requires:
   - name: project-db
-  - name: project-auth
+  - name: project-uaa
   provides:
   - name: srv-api
     properties:
@@ -61,7 +61,7 @@ modules:
       service-key:
         name: project-html5-repo-host-key
   - name: srv-api
-  - name: project-destination-service
+  - name: project-destination
     parameters:
       content-target: true
   parameters:
@@ -117,7 +117,7 @@ resources:
     service: html5-apps-repo
     service-name: project-html5-srv
     service-plan: app-host
-- name: project-destination-service
+- name: project-destination
   type: org.cloudfoundry.managed-service
   parameters:
     config:
@@ -133,7 +133,6 @@ resources:
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
-    service-name: project-destination-service
     service-plan: lite
 - name: project-html5-repo-host
   type: org.cloudfoundry.managed-service

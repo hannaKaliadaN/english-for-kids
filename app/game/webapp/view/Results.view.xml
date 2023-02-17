@@ -1,10 +1,64 @@
-<mvc:View controllerName="game.controller.Results"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-   
-    xmlns="sap.m">
-    <Page title="Results page">
-      <headerContent>
-          <Button text="Main page" press="onMainPagePress" />
-      </headerContent>
-  </Page>
+<mvc:View xmlns:smartform="sap.ui.comp.smartform"
+  xmlns:smarttable="sap.ui.comp.smarttable" controllerName="game.controller.Results"
+  xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+  xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+  xmlns:smartField="sap.ui.comp.smartfield"
+  xmlns:core="sap.ui.core"
+  xmlns="sap.m">
+  <Page id='idSmartControl' title="Results page">
+    <headerContent>
+      <Button id="idButtonMain" text="Main page" press="onMainPagePress" />
+    </headerContent>
+    <content>
+
+      <smartform:SmartForm id="smartFormPage" title="Categories" editable="true">
+        <smartform:Group id="G1">
+          <smartform:GroupElement id="GE-ProductId" label="Title">
+            <smartField:SmartField id="idProductId" value="{title}" >
+            <smartField:configuration>
+              <smartField:Configuration id="_IDGenConfiguration1" controlType="dropDownList"/>
+            </smartField:configuration>
+          </smartField:SmartField>
+        </smartform:GroupElement>
+        <smartform:GroupElement id="_IDGenGroupElement1">
+          <smartField:SmartField id="1" value="{createdAt}" />
+        </smartform:GroupElement>
+      </smartform:Group>
+    </smartform:SmartForm>
+
+    <smartFilterBar:SmartFilterBar id="smartFilterBar" showRestoreButton="false" entitySet="Words" header="Words">
+      <smartFilterBar:controlConfiguration>
+        <smartFilterBar:ControlConfiguration id="_IDGenControlConfiguration1" key="Category_ID" visibleInAdvancedArea="true">
+          <smartFilterBar:customControl>
+            <Input id="cbFilter" selectedKey="Category_ID"/>
+          </smartFilterBar:customControl>
+        </smartFilterBar:ControlConfiguration>
+      </smartFilterBar:controlConfiguration>
+    </smartFilterBar:SmartFilterBar>
+
+    <smarttable:SmartTable id='smartTable' beforeRebindTable='beforeRebindTable' entitySet="Words" smartFilterId="smartFilterBar" tableType="ResponsiveTable" header="Words" persistencyKey="variant1" enableAutoBinding="true" demandPopin="true" editTogglable="true">
+      <Table id="categoryTable">
+        <columns>
+          <Column id="_IDGenColumn1">
+            <customData>
+              <core:CustomData key="p13nData" value='\{"columnKey": "audioSrc", "autoColumnWidth": \{ "visibleProperty": "audioSrc" }, "columnIndex": 3, "leadingProperty": "audioSrc", "sortProperty": "audioSrc", "additionalProperty": "audioSrc", "description": "audioSrc", "displayBehaviour": "descriptionOnly" }'/>
+            </customData>
+            <Text id="_IDGenText1" text="audioSrc"></Text>
+          </Column>
+        </columns>
+        <items>
+          <ColumnListItem id="columnListItem">
+            <cells>
+              <ObjectStatus id="_IDGenObjectStatus1" text="{audioSrc}" state="Error"></ObjectStatus>
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+    </smarttable:SmartTable>
+
+
+
+
+  </content>
+</Page>
 </mvc:View>
