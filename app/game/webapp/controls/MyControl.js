@@ -1,13 +1,8 @@
 sap.ui.define(
-  [
-    "sap/ui/core/Control",
-    "sap/ui/core/TextAlign",
-    "sap/m/Text",
-    "sap/m/Button",
-  ],
+  ["sap/ui/core/Control", "sap/ui/core/TextAlign", "sap/m/Text", "sap/m/Button"],
   function (Control, TextAlign, Text, Button) {
     "use strict";
-    return Control.extend("game.control.MyControl", {
+    return Control.extend("game.controls.MyControl", {
       metadata: {
         properties: {
           header: "string",
@@ -22,9 +17,8 @@ sap.ui.define(
           onEditPress: {},
           onDeletePress: {},
         },
-        aggregations: {},
       },
-      init: function () {},
+
       setHeader: function (header) {
         this.setProperty("header", header, true);
       },
@@ -34,7 +28,6 @@ sap.ui.define(
       setSrcAudio: function (sSrc) {
         this.setProperty("srcAudio", sSrc, true);
       },
-
       setSubheader: function (subheader) {
         this.setProperty("subheader", subheader, true);
       },
@@ -53,10 +46,7 @@ sap.ui.define(
       },
       onButtonPress: function (oEvent, control) {
         let header = this.getHeader();
-        let audio = document.querySelector(
-          ".audio-" + header.replace(/\s/g, "")
-        );
-
+        let audio = document.querySelector(".audio-" + header.replace(/\s/g, ""));
         if (audio.getAttribute("src") !== "undefined") {
           audio.play();
         }
@@ -67,13 +57,11 @@ sap.ui.define(
         rm.openStart("div", control).class("scene").openEnd();
         rm.openStart("div", control).class("card");
         rm.class(`${pageId}`);
-        if (control.getHighLight()) {
-          rm.class("highLight");
-        }
+        // if (control.getHighLight()) {
+        //   rm.class("highLight");
+        // }
         rm.openEnd();
-        rm.openStart("div", control)
-          .class("card__face")
-          .class("card__face--front");
+        rm.openStart("div", control).class("card__face").class("card__face--front");
         rm.openEnd();
         if (control.getIsEdit()) {
           rm.openStart("div", control).class("buttons");
@@ -105,12 +93,9 @@ sap.ui.define(
             .attr("src", control.getSrcPicture())
             .class("image")
             .openEnd();
-          rm.close("div");
         }
-        rm.openStart("div", control)
-          .class("card__face")
-          .class("card__face--back")
-          .openEnd();
+        rm.close("div");
+        rm.openStart("div", control).class("card__face").class("card__face--back").openEnd();
         rm.renderControl(
           new Text({
             text: control.getSubheader(),

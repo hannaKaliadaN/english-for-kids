@@ -32,9 +32,16 @@
                 "uri": "v2/service/english/",
                 "type": "OData",
                 "settings": {
-                    "annotations": [],
+                    "annotations": ["local-annotations"],
                     "localUri": "localService/metadata.xml",
                     "odataVersion": "2.0"
+                }
+            },
+            "local-annotations":{
+                "uri": "annotation/annotations.xml",
+                "type": "ODataAnnotation",
+                "settings": {
+                    "localUri": "annotation/annotations.xml"
                 }
             },
             "helpModel": {
@@ -94,9 +101,7 @@
                     "autoExpandSelect": true,
                     "earlyRequests": true,
                     "defaultBindingMode": "TwoWay"
-                },
-                "useBatch": false
-                
+                }
             },
             "helpModel": {
                 "dataSource": "helpModel",
@@ -121,7 +126,11 @@
                 "controlAggregation": "pages",
                 "controlId": "app",
                 "clearControlAggregation": false,
-                "path": "game.view"
+                "path": "game.view",
+                "bypassed": {
+                    "target": "notFound"
+                }
+
             },
             "routes": [
                 {
@@ -131,7 +140,7 @@
                 },
                 {
                     "name": "Train",
-                    "pattern": "Category/{CategId}",
+                    "pattern": "Category/{CategId}:?query:",
                     "target": "Train"
                 },
                 {
@@ -166,7 +175,12 @@
                 "Admin": {
                     "viewName": "Admin",
                     "viewId": "Admin"
+                },
+                "notFound" : {
+                    "viewName": "NotFound",
+                    "viewId": "NotFound"
                 }
+
             }
         },
         "rootView": {

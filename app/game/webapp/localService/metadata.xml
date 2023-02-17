@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+<edmx:Edmx Version="4.0"
+    xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
         <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
     </edmx:Reference>
@@ -10,7 +11,8 @@
         <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
     </edmx:Reference>
     <edmx:DataServices>
-        <Schema Namespace="EnglishService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Schema Namespace="EnglishService"
+            xmlns="http://docs.oasis-open.org/odata/ns/edm">
             <EntityContainer Name="EntityContainer">
                 <EntitySet Name="Words" EntityType="EnglishService.Words">
                     <NavigationPropertyBinding Path="category" Target="Categories"/>
@@ -119,118 +121,118 @@
                 <Annotation Term="Core.Immutable" Bool="true"/>
                 <Annotation Term="Core.Computed" Bool="true"/>
                 <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
-                </Annotations>
-                <Annotations Target="EnglishService.Words/createdBy">
-                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
-                    <Annotation Term="Core.Immutable" Bool="true"/>
-                    <Annotation Term="Core.Computed" Bool="true"/>
-                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
-                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
-                        </Annotations>
-                        <Annotations Target="EnglishService.Words/modifiedAt">
-                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
-                            <Annotation Term="Core.Computed" Bool="true"/>
-                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
-                            </Annotations>
-                            <Annotations Target="EnglishService.Words/modifiedBy">
-                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
-                                <Annotation Term="Core.Computed" Bool="true"/>
-                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
-                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
-                                    </Annotations>
-                                    <Annotations Target="EnglishService.Words/ID">
-                                        <Annotation Term="Core.Computed" Bool="true"/>
-                                    </Annotations>
-                                    <Annotations Target="EnglishService.Words/IsActiveEntity">
-                                        <Annotation Term="UI.Hidden" Bool="true"/>
-                                    </Annotations>
-                                    <Annotations Target="EnglishService.Words/HasActiveEntity">
-                                        <Annotation Term="UI.Hidden" Bool="true"/>
-                                    </Annotations>
-                                    <Annotations Target="EnglishService.Words/HasDraftEntity">
-                                        <Annotation Term="UI.Hidden" Bool="true"/>
-                                    </Annotations>
-                                    <Annotations Target="EnglishService.Words/DraftAdministrativeData">
-                                        <Annotation Term="UI.Hidden" Bool="true"/>
-                                    </Annotations>
-                                    <Annotations Target="EnglishService.EntityContainer/Categories">
-                                        <Annotation Term="Common.DraftRoot">
-                                            <Record Type="Common.DraftRootType">
-                                                <PropertyValue Property="ActivationAction" String="EnglishService.draftActivate"/>
-                                                <PropertyValue Property="EditAction" String="EnglishService.draftEdit"/>
-                                                <PropertyValue Property="PreparationAction" String="EnglishService.draftPrepare"/>
-                                            </Record>
-                                        </Annotation>
-                                    </Annotations>
-                                    <Annotations Target="EnglishService.Categories/createdAt">
-                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
-                                        <Annotation Term="Core.Immutable" Bool="true"/>
-                                        <Annotation Term="Core.Computed" Bool="true"/>
-                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
-                                        </Annotations>
-                                        <Annotations Target="EnglishService.Categories/createdBy">
-                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
-                                            <Annotation Term="Core.Immutable" Bool="true"/>
-                                            <Annotation Term="Core.Computed" Bool="true"/>
-                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
-                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
-                                                </Annotations>
-                                                <Annotations Target="EnglishService.Categories/modifiedAt">
-                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
-                                                    <Annotation Term="Core.Computed" Bool="true"/>
-                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
-                                                    </Annotations>
-                                                    <Annotations Target="EnglishService.Categories/modifiedBy">
-                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
-                                                        <Annotation Term="Core.Computed" Bool="true"/>
-                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
-                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
-                                                            </Annotations>
-                                                            <Annotations Target="EnglishService.Categories/ID">
-                                                                <Annotation Term="Core.Computed" Bool="true"/>
-                                                            </Annotations>
-                                                            <Annotations Target="EnglishService.Categories/IsActiveEntity">
-                                                                <Annotation Term="UI.Hidden" Bool="true"/>
-                                                            </Annotations>
-                                                            <Annotations Target="EnglishService.Categories/HasActiveEntity">
-                                                                <Annotation Term="UI.Hidden" Bool="true"/>
-                                                            </Annotations>
-                                                            <Annotations Target="EnglishService.Categories/HasDraftEntity">
-                                                                <Annotation Term="UI.Hidden" Bool="true"/>
-                                                            </Annotations>
-                                                            <Annotations Target="EnglishService.Categories/DraftAdministrativeData">
-                                                                <Annotation Term="UI.Hidden" Bool="true"/>
-                                                            </Annotations>
-                                                            <Annotations Target="EnglishService.DraftAdministrativeData">
-                                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>
-                                                                </Annotations>
-                                                                <Annotations Target="EnglishService.DraftAdministrativeData/DraftUUID">
-                                                                    <Annotation Term="UI.Hidden" Bool="true"/>
-                                                                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftUUID}"/>
-                                                                    </Annotations>
-                                                                    <Annotations Target="EnglishService.DraftAdministrativeData/CreationDateTime">
-                                                                        <Annotation Term="Common.Label" String="{i18n>Draft_CreationDateTime}"/>
-                                                                        </Annotations>
-                                                                        <Annotations Target="EnglishService.DraftAdministrativeData/CreatedByUser">
-                                                                            <Annotation Term="Common.Label" String="{i18n>Draft_CreatedByUser}"/>
-                                                                            </Annotations>
-                                                                            <Annotations Target="EnglishService.DraftAdministrativeData/DraftIsCreatedByMe">
-                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
-                                                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsCreatedByMe}"/>
-                                                                                </Annotations>
-                                                                                <Annotations Target="EnglishService.DraftAdministrativeData/LastChangeDateTime">
-                                                                                    <Annotation Term="Common.Label" String="{i18n>Draft_LastChangeDateTime}"/>
-                                                                                    </Annotations>
-                                                                                    <Annotations Target="EnglishService.DraftAdministrativeData/LastChangedByUser">
-                                                                                        <Annotation Term="Common.Label" String="{i18n>Draft_LastChangedByUser}"/>
-                                                                                        </Annotations>
-                                                                                        <Annotations Target="EnglishService.DraftAdministrativeData/InProcessByUser">
-                                                                                            <Annotation Term="Common.Label" String="{i18n>Draft_InProcessByUser}"/>
-                                                                                            </Annotations>
-                                                                                            <Annotations Target="EnglishService.DraftAdministrativeData/DraftIsProcessedByMe">
-                                                                                                <Annotation Term="UI.Hidden" Bool="true"/>
-                                                                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsProcessedByMe}"/>
-                                                                                                </Annotations>
-                                                                                            </Schema>
-                                                                                        </edmx:DataServices>
-                                                                                    </edmx:Edmx>
+            </Annotations>
+            <Annotations Target="EnglishService.Words/createdBy">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Words/modifiedAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Words/modifiedBy">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Words/ID">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Words/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Words/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Words/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Words/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EnglishService.EntityContainer/Categories">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="EnglishService.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="EnglishService.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="EnglishService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="EnglishService.Categories/createdAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Categories/createdBy">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Categories/modifiedAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Categories/modifiedBy">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Categories/ID">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Categories/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Categories/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Categories/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EnglishService.Categories/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EnglishService.DraftAdministrativeData">
+                <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.DraftAdministrativeData/DraftUUID">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>Draft_DraftUUID}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.DraftAdministrativeData/CreationDateTime">
+                <Annotation Term="Common.Label" String="{i18n>Draft_CreationDateTime}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.DraftAdministrativeData/CreatedByUser">
+                <Annotation Term="Common.Label" String="{i18n>Draft_CreatedByUser}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.DraftAdministrativeData/DraftIsCreatedByMe">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsCreatedByMe}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.DraftAdministrativeData/LastChangeDateTime">
+                <Annotation Term="Common.Label" String="{i18n>Draft_LastChangeDateTime}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.DraftAdministrativeData/LastChangedByUser">
+                <Annotation Term="Common.Label" String="{i18n>Draft_LastChangedByUser}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.DraftAdministrativeData/InProcessByUser">
+                <Annotation Term="Common.Label" String="{i18n>Draft_InProcessByUser}"/>
+            </Annotations>
+            <Annotations Target="EnglishService.DraftAdministrativeData/DraftIsProcessedByMe">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsProcessedByMe}"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

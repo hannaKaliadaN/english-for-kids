@@ -7,7 +7,6 @@ Content-Type: application/json
    "word"  : "String",
     "translation"  : "String",
     "imageSrc"     : "String" ,
-  
     "audioSrc"     : "String",
    "Category_ID": 1
 }

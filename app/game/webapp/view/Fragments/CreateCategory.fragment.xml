@@ -1,4 +1,6 @@
-<c:FragmentDefinition xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:f="sap.ui.layout.form">
+<c:FragmentDefinition xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
     <Dialog id="createCategoryPopup" title="Create Category">
         <f:SimpleForm maxContainerCols="1" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" columnsL="1">
             <f:content>
@@ -19,8 +21,7 @@
                             maxLength: 150,
                             minLength: 3
                             }
-                        }"
-                />
+                        }" />
             </f:content>
         </f:SimpleForm>
         <buttons>
